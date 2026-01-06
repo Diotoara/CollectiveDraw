@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
+import {JWT_SECRET} from "@repo/backend-common/config"
 
 interface MyToken {
     userId: string;
@@ -8,7 +9,7 @@ interface MyToken {
 export default function middleware (req:Request,res:Response,next:NextFunction) {
     const token = req.headers["authorization"] || "";
 
-    const decoded = jwt.verify(token, "jwtsecret") as MyToken ;
+    const decoded = jwt.verify(token, JWT_SECRET) as MyToken ;
     if(decoded){
        req.userId = decoded.userId; 
     } else{
@@ -16,6 +17,4 @@ export default function middleware (req:Request,res:Response,next:NextFunction) 
             message : "Authentication Error"
         })
     }
-
-
 }
