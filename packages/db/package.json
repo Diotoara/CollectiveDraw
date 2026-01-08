@@ -1,0 +1,19 @@
+{
+  "name": "@repo/db",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "prisma": "5.8.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@prisma/client": "5.8.1"
+  }
+}
