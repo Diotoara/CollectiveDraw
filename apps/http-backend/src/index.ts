@@ -18,14 +18,24 @@ app.post('/signup', async (req,res)=>{
         })
     }
 
-    await prisma.user.create({
-        data:{
-            email:info.data.username,
-            Passsword:info.data.password,
-            name:info.data.name
-        }
-    })
-    console.log("added to db.")
+    try {
+        await prisma.user.create({
+            data:{
+                email:info.data.username,
+                Passsword:info.data.password,
+                name:info.data.name
+            }
+        })
+        console.log("added to db.")
+        res.json({
+            message : "user added to database."
+        }) 
+    } catch (error) {
+        res.status(411).json({
+            message:"User might already exist. Try Again"
+        })
+    }
+    
 })
 
 app.post('/signin', (req,res)=>{
