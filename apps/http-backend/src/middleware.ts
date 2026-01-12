@@ -12,11 +12,12 @@ export default function middleware (req:Request,res:Response,next:NextFunction) 
     const decoded = jwt.verify(token, JWT_SECRET) as MyToken ;
     if(decoded){
         req.userId = decoded.userId;
-        console.log("bye bye middleware");
     } else{
+        next();
         return res.status(403).json({
             message : "Authentication Error"
         })
     }
     next();
+    return;
 }
