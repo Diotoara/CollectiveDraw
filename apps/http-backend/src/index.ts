@@ -93,10 +93,44 @@ app.post("/room", middleware , async(req,res)=>{
         return res.status(411).json({
             message : "Room already exists with this name"
         })
+    }  
+})
+
+app.get("/chats/:roomId", async (req,res) =>{
+    try {
+        const roomId = Number(req.params.roomId);
+        const messages = await prisma.chat.findMany({
+            where:{
+                roomId:roomId,
+            },
+            orderBy:{
+                id:"desc"
+            },
+            take:50
+        });
+        res.json({
+            messages
+        })  
+    } catch (error) {
+        console.log("getting chats error")
     }
     
 
-})
+} )
+
+app.get("/room/:slug", async (req,res) =>{
+    const slug = req.params.slug;
+    const room = await prisma.room.findFirst({
+        where:{
+            slug
+        },
+    });
+    res.json({
+        room
+    })
+
+} )
+
 
 app.listen(3001, () => {
   console.log("http-backend running on http://localhost:3001");
